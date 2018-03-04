@@ -10,11 +10,27 @@ function displayMsg(text, color) {
     document.getElementById("msg").style.color = color;
 }
 
+function displayBlockMsg(text, color) {
+    if (color === undefined) {
+        color = "black";
+    }
+    document.getElementById("block_msg").innerHTML = text;
+    document.getElementById("block_msg").style.color = color;
+}
+
+
+
 function displayAllAgents(json) {
     cleanTable(OUTPUT_TABLE_NAME);
     var agents;
+    var blocks;
     try {
-        agents = JSON.parse(json);
+        console.log("type json", typeof json);
+
+//        results = jQuery.parseJSON( json ); // JSON.parse(json);
+
+        agents = json.agents;
+        blocks = json.blocks;
     } catch (e) {
         displayMsg("Invalid response from server " + json, "red");
         return;
@@ -22,6 +38,12 @@ function displayAllAgents(json) {
     for (var i in agents) {
         displayAgent(agents[i]);
     }
+
+    var blockText = "New block mined:<br>";
+    for(var i =blocks.length-1; i>=0; i--) {
+        blockText += getBlockString(blocks[i]);
+    }
+    displayBlockMsg(blockText);
 }
 
 function displayAgent(jsonAgent) {

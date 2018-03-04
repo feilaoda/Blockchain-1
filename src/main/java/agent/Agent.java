@@ -1,5 +1,7 @@
 package agent;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -121,6 +123,7 @@ public class Agent {
 
     }
 
+    @JsonIgnore
     public List<Block> getBlocks() {
         return blockChain.getBlocks();
     }
@@ -196,9 +199,7 @@ public class Agent {
     }
 
 
-    public List<Block> getBlockchain() {
-        return blockChain.getBlocks();
-    }
+
 
     public int getPort() {
         return port;

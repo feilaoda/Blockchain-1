@@ -3,7 +3,11 @@
 var testMode = false;
 
 function getAllAgents() {
-    sendHttpRequest("GET", "agent/all", null, displayAllAgents);
+
+    $.get("agent/all", function (data) {
+        displayAllAgents(data);
+    });
+//    sendHttpRequest("GET", "agent/all", null, displayAllAgents);
 
     if (testMode) {
         displayAllAgents('[{"name":"Agent1","port":1001,"blockchain":[{"index":0,"creator":"Agent1","timestamp":1502193341671,"hash":"4f99b67b06b6831886815ffe66a55be2e34dcefdfc16b6214710313062a8a480","previousHash":"ROOT_HASH"}]}' +
