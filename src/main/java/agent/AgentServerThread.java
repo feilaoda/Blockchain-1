@@ -44,7 +44,7 @@ public class AgentServerThread extends Thread {
                         out.writeObject(new Message.MessageBuilder()
                                 .withSender(agent.getPort())
                                 .withType(RSP_ALL_BLOCKS)
-                                .withBlocks(agent.getBlockchain())
+                                .withBlocks(agent.getBlocks())
                                 .build());
                         break;
                     }

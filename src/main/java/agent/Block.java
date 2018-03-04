@@ -3,15 +3,24 @@ package agent;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
 
 public class Block implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private int index;
-    private Long timestamp;
-    private String hash;
-    private String previousHash;
-    private String creator;
+    protected int index;
+    protected Long timestamp;
+    protected String hash;
+    protected String previousHash;
+    protected String creator;
+
+    protected Integer nonce;
+
+    protected String data;
+
+    private ProofOfWork proofOfWork;
 
     // for jackson
     public Block() {
@@ -54,12 +63,32 @@ public class Block implements Serializable {
         return result;
     }
 
+
+
     public Block(int index, String preHash, String creator) {
         this.index = index;
         this.previousHash = preHash;
         this.creator = creator;
         timestamp = System.currentTimeMillis();
-        hash = calculateHash(String.valueOf(index) + previousHash + String.valueOf(timestamp));
+        hash = Utils.hash256(String.valueOf(index) + previousHash + String.valueOf(timestamp));
+
+        proofOfWork = new ProofOfWork(this);
+        Map<String, String> map = proofOfWork.run();
+
+        if (map != null) {
+            this.nonce = Integer.parseInt(map.get("nonce"));
+            this.hash = map.get("hash");
+
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            System.out.println("|-----------------------------------|" + creator +  new Date());
+            System.out.println("编号: \t" + index);
+            System.out.println("nonce: \t" + nonce);
+            System.out.println("时间:\t" + this.timestamp);
+            System.out.println("数据:\t" + this.data);
+            System.out.println("父Hash:\t" + this.previousHash);
+            System.out.println("Hash：\t" + this.hash);
+        }
+
     }
 
     public String getCreator() {
@@ -82,23 +111,44 @@ public class Block implements Serializable {
         return previousHash;
     }
 
-    private String calculateHash(String text) {
-        MessageDigest digest;
-        try {
-            digest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            return "HASH_ERROR";
-        }
 
-        final byte bytes[] = digest.digest(text.getBytes());
-        final StringBuilder hexString = new StringBuilder();
-        for (final byte b : bytes) {
-            String hex = Integer.toHexString(0xff & b);
-            if (hex.length() == 1) {
-                hexString.append('0');
-            }
-            hexString.append(hex);
-        }
-        return hexString.toString();
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
+
+    public void setPreviousHash(String previousHash) {
+        this.previousHash = previousHash;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public Integer getNonce() {
+        return nonce;
+    }
+
+    public void setNonce(Integer nonce) {
+        this.nonce = nonce;
     }
 }

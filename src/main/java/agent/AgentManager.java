@@ -6,11 +6,12 @@ import java.util.List;
 public class AgentManager {
 
     private List<Agent> agents = new ArrayList<>();
-    private static final Block root = new Block(0, "ROOT_HASH", "ROOT");
+    private static final Block root = new Genesis();
 
     public Agent addAgent(String name, int port) {
         Agent a = new Agent(name, "localhost", port, root, agents);
         a.startHost();
+        a.startMine();
         agents.add(a);
         return a;
     }
@@ -39,7 +40,7 @@ public class AgentManager {
     public List<Block> getAgentBlockchain(String name) {
         final Agent agent = getAgent(name);
         if (agent != null) {
-            return agent.getBlockchain();
+            return agent.getBlocks();
         }
         return null;
     }

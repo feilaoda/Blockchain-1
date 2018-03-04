@@ -12,7 +12,7 @@ public class Message implements Serializable {
     List<Block> blocks;
 
     public enum MESSAGE_TYPE {
-        READY, INFO_NEW_BLOCK, REQ_ALL_BLOCKS, RSP_ALL_BLOCKS
+        NEW_NODE, READY, INFO_NEW_BLOCK, REQ_ALL_BLOCKS, RSP_ALL_BLOCKS
     }
 
     @Override

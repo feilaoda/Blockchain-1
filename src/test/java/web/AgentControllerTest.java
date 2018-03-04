@@ -66,12 +66,12 @@ public class AgentControllerTest {
         assert a != null;
         assertThat(a.getName(), is(name));
         assertThat(a.getPort(), is(port));
-        assertThat(a.getBlockchain().size(), is(1));
+        assertThat(a.getBlocks().size(), is(1));
         a = getAgent(name);
         assert a != null;
         assertThat(a.getName(), is(name));
         assertThat(a.getPort(), is(port));
-        assertThat(a.getBlockchain().size(), is(1));
+        assertThat(a.getBlocks().size(), is(1));
         Thread.sleep(500);
         deleteAgent(name);
         a = getAgent(name);
@@ -106,7 +106,7 @@ public class AgentControllerTest {
         assert a != null;
         assertThat(a.getName(), is(name));
         assertThat(a.getPort(), is(port));
-        assertThat(a.getBlockchain().size(), is(2));
+        assertThat(a.getBlocks().size(), is(2));
         deleteAgent(name);
         a = getAgent(name);
         assertThat(a, is(nullValue()));
@@ -122,13 +122,13 @@ public class AgentControllerTest {
         mine(AGENT1);
         final Agent a1 = getAgent(AGENT1);
         assert a1 != null;
-        final String hash = a1.getBlockchain().get(1).getHash();
+        final String hash = a1.getBlocks().get(1).getHash();
         final Agent a2 = getAgent(AGENT2);
         assert a2 != null;
-        assertThat(a2.getBlockchain().get(1).getHash(), is(hash));
+        assertThat(a2.getBlocks().get(1).getHash(), is(hash));
         final Agent a3 = getAgent(AGENT3);
         assert a3 != null;
-        assertThat(a3.getBlockchain().get(1).getHash(), is(hash));
+        assertThat(a3.getBlocks().get(1).getHash(), is(hash));
 
         mine(AGENT2);
         mine(AGENT3);
@@ -137,7 +137,7 @@ public class AgentControllerTest {
         assert agents != null;
         assertThat(agents.size(), is(3));
         for (Agent a : agents) {
-            assertThat(a.getBlockchain().size(), is(4));
+            assertThat(a.getBlocks().size(), is(4));
         }
 
         deleteAllAgents();
@@ -151,15 +151,15 @@ public class AgentControllerTest {
         IntStream.range(0, 2).forEach(value -> mine(AGENT2));
         final Agent a1 = getAgent(AGENT1);
         assert a1 != null;
-        assertThat(a1.getBlockchain().size(), is(5));
+        assertThat(a1.getBlocks().size(), is(5));
         final Agent a2 = getAgent(AGENT2);
         assert a2 != null;
-        assertThat(a2.getBlockchain().size(), is(5));
+        assertThat(a2.getBlocks().size(), is(5));
         final Agent a3 = createAgent(AGENT3, 1003);
         assert a3 != null;
-        assertThat(a3.getBlockchain().size(), is(5));
-        assertThat(a1.getBlockchain().equals(a3.getBlockchain()), is(true));
-        assertThat(a2.getBlockchain().equals(a3.getBlockchain()), is(true));
+        assertThat(a3.getBlocks().size(), is(5));
+        assertThat(a1.getBlocks().equals(a3.getBlocks()), is(true));
+        assertThat(a2.getBlocks().equals(a3.getBlocks()), is(true));
     }
 
 
