@@ -7,6 +7,10 @@ buildscript {
     }
 }
 
+
+
+
+
 apply plugin: 'war'
 apply plugin: 'java'
 apply plugin: 'idea'
@@ -30,6 +34,9 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+    compile 'com.github.ben-manes.caffeine:caffeine:2.6.1'
+    compile 'org.bouncycastle:bcprov-jdk15on:1.59'
+    compile 'net.i2p.crypto:eddsa:0.2.0'
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-devtools")
     testCompile("org.springframework.boot:spring-boot-starter-test")
