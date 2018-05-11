@@ -34,11 +34,16 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+    compile 'com.google.guava:guava:18.0'
+    compile 'com.alibaba:fastjson:1.2.44'
     compile 'com.github.ben-manes.caffeine:caffeine:2.6.1'
     compile 'org.bouncycastle:bcprov-jdk15on:1.59'
     compile 'net.i2p.crypto:eddsa:0.2.0'
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-devtools")
+    compile 'io.netty:netty-all:4.0.33.Final'
+    compile 'net.sf.jopt-simple:jopt-simple:4.9'
+    compile 'com.google.guava:guava:24.1.1-jre'
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("junit:junit")
 }

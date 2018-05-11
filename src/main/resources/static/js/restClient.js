@@ -2,9 +2,21 @@
 
 var testMode = false;
 
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 function getAllAgents() {
 
-    $.get("agent/all", function (data) {
+    var agent = getParameterByName("agent", window.location.href);
+
+    $.get("agent/all?agent="+agent, function (data) {
         displayAllAgents(data);
     });
 //    sendHttpRequest("GET", "agent/all", null, displayAllAgents);

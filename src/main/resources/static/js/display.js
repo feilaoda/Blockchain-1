@@ -79,6 +79,8 @@ function displayAgent(jsonAgent) {
     p.appendChild(addCellButton("Delete", function () {
         deleteAgent(agent.name);
     }));
+    p.appendChild(addA("Show Blocks", "?agent="+agent.name, function () {
+        }));
     row.insertCell(idx).appendChild(p);
 
     function addCellButton(name, onclick) {
@@ -88,6 +90,13 @@ function displayAgent(jsonAgent) {
         button.onclick = onclick;
         return button;
     }
+
+    function addA(name, url, onclick) {
+            var a = document.createElement("a");
+            a.setAttribute('href', url);
+            a.appendChild(document.createTextNode(name));
+            return a;
+        }
 }
 
 function displayBlock(jsonBlock) {
